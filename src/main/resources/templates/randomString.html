@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+<h1>Checkout</h1>
+
+<form action="/checkout/process" method="post" >
+    <div th:each="dish: ${dishes}">
+        <label th:text="${dish}"></label>
+        <input th:value="${dish}" name="dish" type="hidden"/>
+        <input value="0" name="quantity" type="number"/>
+    </div>
+    <button type="submit">knop</button>
+</form>
+</body>
+</html>
