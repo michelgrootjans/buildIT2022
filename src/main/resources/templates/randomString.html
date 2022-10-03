@@ -8,10 +8,10 @@
 <h1>Checkout</h1>
 
 <form action="/checkout/process" method="post" >
-    <div th:each="dish: ${dishes}">
+    <div th:each="dish, itemStat: ${dishes}">
         <label th:text="${dish}"></label>
-        <input th:value="${dish}" name="dish" type="hidden"/>
-        <input value="0" name="quantity" type="number"/>
+        <input th:value="${dish}" th:name="'dishes[' + ${itemStat.index} + '].name'" type="hidden"/>
+        <input value="0" th:name="'dishes[' + ${itemStat.index} + '].quantity'" type="number"/>
     </div>
     <button type="submit">knop</button>
 </form>

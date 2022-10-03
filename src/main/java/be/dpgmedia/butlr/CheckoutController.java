@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class CheckoutController {
@@ -24,14 +25,11 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout/process")
-    public String processCheckout(@RequestParam List<String> dish, @RequestParam List<Integer> quantity) {
-        System.out.println(dish);
-        System.out.println(quantity);
-        List<OrderLine> orderLines = new ArrayList<>();
-        for (int i = 0; i < dish.size(); i++) {
-            orderLines.add(new OrderLine(dish.get(i), quantity.get(i)));
-        }
+    public String processCheckout(@ModelAttribute PlaceOrderForm form) {
         UUID orderId = UUID.randomUUID();
+        List<OrderLine> orderLines = form.getDishes().stream()
+                .map(dish -> new OrderLine(dish.getName(), dish.getQuantity()))
+                .collect(Collectors.toList());
         checkoutService.placeOrder(orderId.toString(), orderLines);
         return "redirect:/" + orderId;
     }
