@@ -1,11 +1,27 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+actor cashier
+participant Browser
+participant Controller
+participant Restaurant
+participant Service
+database Database
 
-autonumber
+cashier -> Browser: go to /checkout
+Browser -> Controller: GET /checkout
+Controller -> Restaurant: getDishes()
+Controller <-- Restaurant: List<String> dishes
+Browser <-- Controller: menu page
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+cashier -> Browser: select dish quantities
+cashier -> Browser: click 'place order'
+Browser -> Controller: POST /checkout/process
+Controller -> Service: save order
+Service -> Database: INSERT order
+Browser <-- Controller: REDIRECT to /checkout/:orderId
+Browser -> Controller: GET /checkout/:orderId
+Controller -> Service: findOrder(orderId)
+Service -> Database: SELECT order
+Controller <-- Service: Order
+Browser <-- Controller: order page
 @enduml
