@@ -11,7 +11,7 @@ Cashier -> Browser: go to /checkout
 Browser -> Controller: GET /checkout
 Controller -> Restaurant: getDishes()
 Controller <-- Restaurant: List<String> dishes
-Browser <-- Controller: menu page
+Browser <-- Controller: checkout page
 
 Cashier -> Browser: select dish quantities
 Cashier -> Browser: click 'place order'

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class CheckoutController {
     public String getCheckoutPage(Model model) {
         Restaurant restaurant = new Restaurant();
         model.addAttribute("dishes", restaurant.getDishes());
-        return "randomString";
+        return "checkoutPage";
     }
 
     @PostMapping("/checkout/process")
@@ -31,7 +30,16 @@ public class CheckoutController {
                 .map(dish -> new OrderLine(dish.getName(), dish.getQuantity()))
                 .collect(Collectors.toList());
         checkoutService.placeOrder(orderId.toString(), orderLines);
-        return "redirect:/" + orderId;
+        return "redirect:/checkout/" + orderId;
+    }
+
+    @GetMapping("/checkout/{orderId}")
+    public String getOrder(@PathVariable String orderId, Model model) {
+        FullOrder order = checkoutService.getOrder(orderId);
+
+        model.addAttribute("dishes", order.getLines());
+        model.addAttribute("totalPrice", order.getTotal());
+        return "orderPage";
     }
 
 }

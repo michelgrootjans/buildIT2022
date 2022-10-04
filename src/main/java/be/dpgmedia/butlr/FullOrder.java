@@ -10,6 +10,18 @@ public class FullOrder {
         this.lines = lines;
     }
 
+
+    public List<FullOrderLine> getLines() {
+        return lines;
+    }
+
+    public Integer getTotal() {
+        int orderTotal = lines.stream()
+                .mapToInt(line -> line.getTotalPrice())
+                .sum();
+        return orderTotal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,6 +7,22 @@ public class FullOrderLine {
     private final String name;
     private final int unitPrice;
 
+    public Integer getQuantity() {
+        return qty;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getTotalPrice() {
+        return getUnitPrice() * getQuantity();
+    }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+
     public FullOrderLine(int qty, String name, int unitPrice) {
         this.qty = qty;
         this.name = name;

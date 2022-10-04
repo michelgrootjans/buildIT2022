@@ -1,6 +1,5 @@
 ## To refactor
-- [ ] messy view name
-- [ ] use our real Restaurant class
+- [x] messy view name
 
 ## Next features
 - [ ] show orders screen
