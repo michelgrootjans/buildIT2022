@@ -1,20 +1,20 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-actor cashier
+actor Cashier
 participant Browser
 participant Controller
 participant Restaurant
 participant Service
 database Database
 
-cashier -> Browser: go to /checkout
+Cashier -> Browser: go to /checkout
 Browser -> Controller: GET /checkout
 Controller -> Restaurant: getDishes()
 Controller <-- Restaurant: List<String> dishes
 Browser <-- Controller: menu page
 
-cashier -> Browser: select dish quantities
-cashier -> Browser: click 'place order'
+Cashier -> Browser: select dish quantities
+Cashier -> Browser: click 'place order'
 Browser -> Controller: POST /checkout/process
 Controller -> Service: save order
 Service -> Database: INSERT order
